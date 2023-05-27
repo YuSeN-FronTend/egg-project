@@ -7,6 +7,14 @@ class UserController extends Controller {
     const { ctx, app } = this;
     try {
         const { username, password } = ctx.request.body;
+        if(!username || !password) {
+          ctx.body = {
+            code: 500,
+            msg: '账号或密码为空',
+            data: null
+          }
+          return
+        }
         // 根据用户名在数据库查找相对应的操作
         const userInfo = await ctx.service.user.login(username);
         // 没找到说明没有该用户

@@ -9,14 +9,19 @@ class HomeController extends Controller {
   }
   async getData() {
     const { ctx }  = this;
-    const data = {
-      name: 'zj',
-      age: 23
-    };
-    ctx.body = {
-      code: 200,
-      msg: '请求成功',
-      data
+    try{
+      const result = ctx.service.home.getData(ctx.request.body);
+      if (result) {
+        ctx.body = {
+          code: 200,
+          msg: '添加成功',
+          data: null
+        }
+        return
+      }
+    }catch(error) {
+      console.log(error);
+      return
     }
   }
 }
