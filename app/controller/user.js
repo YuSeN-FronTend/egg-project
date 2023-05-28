@@ -41,10 +41,43 @@ class UserController extends Controller {
             exp: Math.floor(Date.now()/1000) + (24 * 60 * 60) // token有效期为24小时
           }, app.config.jwt.secret);
           // 返回token
-          ctx.body = {
-            code: 200,
-            msg: '登陆成功!',
-            data: { token }
+          if(userInfo.job === '用户') {
+            ctx.body = {
+              code: 200,
+              msg: '登陆成功!',
+              data: { 
+                token,
+                routeInfo: [
+                  {
+                    path: '/layout',
+                    name: 'layout',
+                    redirect: '/adminCenter',
+                    children: [
+                      {
+                        path: '/adminCenter',
+                        name: 'adminCenter',
+                        component: 'group/adminCenter',
+                        meta: {
+                          type: 'first',
+                          name: '配置中心',
+                          icon: 'Setting'
+                        }
+                      },
+                      {
+                        path: '/personCenter',
+                        name: 'PersonCenter',
+                        component: 'group/asidefirst/personCenter',
+                        meta: {
+                          type: 'first',
+                          name: '个人中心',
+                          icon: 'UserFilled'
+                        }
+                      }
+                    ]
+                  },
+                ]
+               }
+            }
           }
         }
 
