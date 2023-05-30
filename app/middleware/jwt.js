@@ -10,7 +10,7 @@ module.exports = (config) => {
                 } catch (error) {
                     console.log(error, 34);
                     ctx.body = {
-                        msg: 'token已过期，请重新登录',
+                        msg: '无效token',
                         code: 401,
                     }
                     return;
